@@ -12,10 +12,12 @@ jobs:
       - name: Cache dependencies
         uses: actions/cache@v3
         with:
+          # reserved path in worker server and github server to cache dependencies specific to npm
           path: ~/.npm
           # create a key name that can change when the package-lock.json file changes
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
+        # npm install will check ~/.npm path in github server for cached dependencies first. If not, it will install dependencies to that path
         run: npm ci
       - name: Lint code
         run: npm run lint
@@ -32,10 +34,12 @@ jobs:
       - name: Cache dependencies
         uses: actions/cache@v3
         with:
+          # reserved path in worker server and github server to cache dependencies specific to npm
           path: ~/.npm
           # create a key name that can change when the package-lock.json file changes
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
+        # npm install will check ~/.npm path in github server for cached dependencies first. If not, it will install dependencies to that path
         run: npm ci
       - name: Build website
         run: npm run build
